@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ArrendaMoz - Perfil</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        /* ==================== MESMO ESTILO DO DASHBOARD ==================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        :root {
+            --bg-primary: #f0f4f8;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a3a5c;
+            --text-secondary: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border-color: #e8edf5;
+            --shadow: 0 4px 20px rgba(0,0,0,0.06);
+            --shadow-hover: 0 12px 40px rgba(0,0,0,0.1);
+            --gradient-primary: linear-gradient(135deg, #e67e22, #d35400);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #1c2333;
+            --text-primary: #f0f6fc;
+            --text-secondary: #c9d1d9;
+            --text-muted: #8b949e;
+            --border-color: #30363d;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: var(--transition);
+        }
+        
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        /* ==================== HEADER ==================== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 20px 30px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-primary);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(230,126,34,0.3);
+        }
+        
+        .logo-text h1 {
+            font-size: 24px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #1a3a5c, #2c5f8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .logo-text .subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            -webkit-text-fill-color: var(--text-muted);
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border: 1px solid var(--border-color);
+            text-decoration: none;
+        }
+        
+        .btn-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(230,126,34,0.4);
+        }
+        
+        /* ==================== PROFILE HEADER ==================== */
+        .profile-header {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 20px rgba(230,126,34,0.3);
+            flex-shrink: 0;
+        }
+        
+        .profile-info h2 {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        
+        .profile-info p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 4px;
+        }
+        
+        .profile-info .badge-status {
+            display: inline-block;
+            background: #27ae60;
+            color: white;
+            padding: 2px 14px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        
+        .profile-stats {
+            display: flex;
+            gap: 30px;
+            margin-left: auto;
+            flex-wrap: wrap;
+        }
+        
+        .profile-stats .stat {
+            text-align: center;
+        }
+        
+        .profile-stats .stat .num {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+        
+        .profile-stats .stat .label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+        
+        /* ==================== CARDS ==================== */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .card-header .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-header .icon-box {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+        
+        .card-header h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .card-header .badge-card {
+            background: var(--bg-primary);
+            color: var(--text-muted);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        /* ==================== TABELAS ==================== */
+        .tabela-wrapper {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        table th {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        table td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        
+        table tr:hover td {
+            background: var(--bg-primary);
+        }
+        
+        .status-badge {
+            padding: 2px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        .status-badge.active { background: #d5f5e3; color: #1a5a3a; }
+        .status-badge.pending { background: #fef9e7; color: #7a5a1a; }
+        .status-badge.expired { background: #fadbd8; color: #7a1a1a; }
+        
+        /* ==================== TABS ==================== */
+        .tab-nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding: 6px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+        }
+        
+        .tab-nav button {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            background: transparent;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .tab-nav button:hover {
+            background: rgba(230,126,34,0.08);
+            color: var(--text-primary);
+        }
+        
+        .tab-nav button.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(230,126,34,0.35);
+        }
+        
+        .tab-panel {
+            display: none;
+            animation: fadeSlide 0.3s ease;
+        }
+        
+        .tab-panel.active { display: block; }
+        
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ==================== RESPONSIVO ==================== */
+        @media (max-width: 768px) {
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .profile-stats {
+                margin: 0;
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .tab-nav button {
+                min-width: 80px;
+                font-size: 11px;
+                padding: 8px 12px;
+            }
+            
+            .tab-nav button span { display: none; }
+            
+            .header { flex-direction: column; text-align: center; }
+            .header-right { justify-content: center; }
+        }
+        
+        @media (max-width: 480px) {
+            body { padding: 10px; }
+            .profile-avatar { width: 70px; height: 70px; font-size: 28px; }
+            .profile-info h2 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ==================== HEADER ==================== -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo-icon"><i class="fas fa-home"></i></div>
+                <div class="logo-text">
+                    <h1>ArrendaMoz</h1>
+                    <span class="subtitle"><i class="fas fa-gavel"></i> Perfil do Usuário</span>
+                </div>
+            </div>
+            <div class="header-right">
+                <a href="dashboard.html" class="btn-icon" title="Dashboard">
+                    <i class="fas fa-chart-pie"></i>
+                </a>
+                <button class="btn-icon" onclick="toggleDarkMode()" title="Tema">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                <button class="btn btn-primary" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Sair
+                </button>
+            </div>
+        </header>
+        
+        <!-- ==================== PROFILE HEADER ==================== -->
+        <div class="profile-header">
+            <div class="profile-avatar" id="profileAvatar">U</div>
+            <div class="profile-info">
+                <h2 id="profileName">Usuário</h2>
+                <p id="profileEmail">usuario@email.com</p>
+                <span class="badge-status"><i class="fas fa-check-circle"></i> Verificado</span>
+            </div>
+            <div class="profile-stats">
+                <div class="stat">
+                    <div class="num" id="statContratos">0</div>
+                    <div class="label">Contratos</div>
+                </div>
+                <div class="stat">
+                    <div class="num" id="statAtivos">0</div>
+                    <div class="label">Ativos</div>
+                </div>
+                <div class="stat">
+                    <div class="num" id="statEnvios">0</div>
+                    <div class="label">Envios</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== TABS ==================== -->
+        <div class="tab-nav">
+            <button class="active" onclick="mudarTabPerfil('contratos')">
+                <i class="fas fa-file-contract"></i> <span>Contratos</span>
+            </button>
+            <button onclick="mudarTabPerfil('envios')">
+                <i class="fas fa-envelope"></i> <span>Envios</span>
+            </button>
+            <button onclick="mudarTabPerfil('configuracoes')">
+                <i class="fas fa-cog"></i> <span>Configurações</span>
+            </button>
+        </div>
+        
+        <!-- ==================== TAB CONTRATOS ==================== -->
+        <div id="tabContratos" class="tab-panel active">
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-list"></i></div>
+                        <h3>Meus Contratos</h3>
+                    </div>
+                    <span class="badge-card">Histórico</span>
+                </div>
+                <div class="tabela-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Inquilino</th>
+                                <th>Renda</th>
+                                <th>Data</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaContratosPerfil">
+                            <tr>
+                                <td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px;">
+                                    <i class="fas fa-inbox" style="font-size:24px; display:block; margin-bottom:8px;"></i>
+                                    Nenhum contrato encontrado
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== TAB ENVIOS ==================== -->
+        <div id="tabEnvios" class="tab-panel">
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-paper-plane"></i></div>
+                        <h3>Histórico de Envios</h3>
+                    </div>
+                    <span class="badge-card">Email</span>
+                </div>
+                <div class="tabela-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Destinatário</th>
+                                <th>Assunto</th>
+                                <th>Assinatura</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaEnviosPerfil">
+                            <tr>
+                                <td colspan="4" style="text-align:center; color:var(--text-muted); padding:30px;">
+                                    <i class="fas fa-envelope-open" style="font-size:24px; display:block; margin-bottom:8px;"></i>
+                                    Nenhum envio realizado
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== TAB CONFIGURAÇÕES ==================== -->
+        <div id="tabConfiguracoes" class="tab-panel">
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-cog"></i></div>
+                        <h3>Configurações da Conta</h3>
+                    </div>
+                </div>
+                
+                <div class="form-group" style="margin-bottom:16px;">
+                    <label><i class="fas fa-user"></i> Nome</label>
+                    <input type="text" id="inputNome" value="Usuário" style="width:100%; padding:12px 16px; border:2px solid var(--border-color); border-radius:12px; font-size:14px; font-family:'Inter',sans-serif; background:var(--bg-primary); color:var(--text-primary);">
+                </div>
+                <div class="form-group" style="margin-bottom:16px;">
+                    <label><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="inputEmail" value="usuario@email.com" style="width:100%; padding:12px 16px; border:2px solid var(--border-color); border-radius:12px; font-size:14px; font-family:'Inter',sans-serif; background:var(--bg-primary); color:var(--text-primary);">
+                </div>
+                
+                <button class="btn btn-primary" onclick="salvarConfiguracoes()">
+                    <i class="fas fa-save"></i> Salvar Alterações
+                </button>
+                
+                <hr style="margin:20px 0; border-color:var(--border-color);">
+                
+                <button class="btn" onclick="limparDados()" style="background:#e74c3c; color:white; width:100%; justify-content:center;">
+                    <i class="fas fa-trash-alt"></i> Limpar Dados Locais
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // ==================== CARREGAR DADOS ====================
+        function carregarDadosPerfil() {
+            const nome = localStorage.getItem('userNome') || 'Usuário';
+            const email = localStorage.getItem('userEmail') || 'usuario@email.com';
+            
+            document.getElementById('profileName').textContent = nome;
+            document.getElementById('profileEmail').textContent = email;
+            document.getElementById('profileAvatar').textContent = nome.charAt(0).toUpperCase();
+            document.getElementById('inputNome').value = nome;
+            document.getElementById('inputEmail').value = email;
+            
+            // Carregar contratos
+            const contratos = JSON.parse(localStorage.getItem('contratosSalvos')) || [];
+            const envios = JSON.parse(localStorage.getItem('historicoEnvios')) || [];
+            
+            document.getElementById('statContratos').textContent = contratos.length;
+            document.getElementById('statAtivos').textContent = contratos.filter(c => c.status !== 'expirado').length;
+            document.getElementById('statEnvios').textContent = envios.length;
+            
+            // Preencher tabela de contratos
+            const tbodyContratos = document.getElementById('listaContratosPerfil');
+            if (contratos.length === 0) {
+                tbodyContratos.innerHTML = `
+                    <tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:30px;">
+                        <i class="fas fa-inbox" style="font-size:24px; display:block; margin-bottom:8px;"></i>
+                        Nenhum contrato encontrado
+                    </td></tr>
+                `;
+            } else {
+                let html = '';
+                contratos.slice(0, 20).forEach(c => {
+                    const status = c.status === 'expirado' ? 
+                        '<span class="status-badge expired">Expirado</span>' :
+                        '<span class="status-badge active">Ativo</span>';
+                    html += `
+                        <tr>
+                            <td>${c.tipo || 'N/A'}</td>
+                            <td>${c.inquilino || 'N/A'}</td>
+                            <td>${c.renda ? parseFloat(c.renda).toLocaleString('pt-MZ') + ' MZN' : 'N/A'}</td>
+                            <td>${c.created_at ? new Date(c.created_at).toLocaleDateString('pt-MZ') : 'N/A'}</td>
+                            <td>${status}</td>
+                        </tr>
+                    `;
+                });
+                tbodyContratos.innerHTML = html;
+            }
+            
+            // Preencher tabela de envios
+            const tbodyEnvios = document.getElementById('listaEnviosPerfil');
+            if (envios.length === 0) {
+                tbodyEnvios.innerHTML = `
+                    <tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:30px;">
+                        <i class="fas fa-envelope-open" style="font-size:24px; display:block; margin-bottom:8px;"></i>
+                        Nenhum envio realizado
+                    </td></tr>
+                `;
+            } else {
+                let html = '';
+                envios.slice(0, 20).forEach(e => {
+                    html += `
+                        <tr>
+                            <td>${e.data ? new Date(e.data).toLocaleDateString('pt-MZ') : 'N/A'}</td>
+                            <td>${e.destinatario || 'N/A'}</td>
+                            <td>${e.assunto || 'N/A'}</td>
+                            <td>${e.assinatura === 'Sim' ? '✅ Sim' : '❌ Não'}</td>
+                        </tr>
+                    `;
+                });
+                tbodyEnvios.innerHTML = html;
+            }
+        }
+        
+        // ==================== TABS ====================
+        function mudarTabPerfil(tab) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-nav button').forEach(b => b.classList.remove('active'));
+            
+            if (tab === 'contratos') {
+                document.getElementById('tabContratos').classList.add('active');
+                document.querySelector('.tab-nav button:first-child').classList.add('active');
+            } else if (tab === 'envios') {
+                document.getElementById('tabEnvios').classList.add('active');
+                document.querySelector('.tab-nav button:nth-child(2)').classList.add('active');
+            } else {
+                document.getElementById('tabConfiguracoes').classList.add('active');
+                document.querySelector('.tab-nav button:nth-child(3)').classList.add('active');
+            }
+        }
+        
+        // ==================== SALVAR CONFIGURAÇÕES ====================
+        function salvarConfiguracoes() {
+            const nome = document.getElementById('inputNome').value.trim();
+            const email = document.getElementById('inputEmail').value.trim();
+            
+            if (nome) {
+                localStorage.setItem('userNome', nome);
+                document.getElementById('profileName').textContent = nome;
+                document.getElementById('profileAvatar').textContent = nome.charAt(0).toUpperCase();
+            }
+            if (email) {
+                localStorage.setItem('userEmail', email);
+                document.getElementById('profileEmail').textContent = email;
+            }
+            
+            alert('✅ Configurações salvas com sucesso!');
+        }
+        
+        // ==================== LIMPAR DADOS ====================
+        function limparDados() {
+            if (confirm('Tem certeza que deseja limpar todos os dados locais? Esta ação não pode ser desfeita.')) {
+                localStorage.removeItem('contratosSalvos');
+                localStorage.removeItem('historicoEnvios');
+                localStorage.removeItem('historicoLembretesIMI');
+                localStorage.removeItem('assinaturaSalva');
+                alert('✅ Dados limpos com sucesso!');
+                carregarDadosPerfil();
+            }
+        }
+        
+        // ==================== DARK MODE ====================
+        function toggleDarkMode() {
+            const theme = document.documentElement.getAttribute('data-theme');
+            const newTheme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            document.getElementById('themeIcon').className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        
+        function carregarTema() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            document.getElementById('themeIcon').className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        
+        // ==================== LOGOUT ====================
+        function logout() {
+            if (confirm('Deseja realmente sair?')) {
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userNome');
+                localStorage.removeItem('modoConvidado');
+                localStorage.removeItem('verificado');
+                window.location.href = 'cadastro.html';
+            }
+        }
+        
+        // ==================== INICIALIZAÇÃO ====================
+        window.onload = function() {
+            carregarTema();
+            
+            // Verificar autenticação
+            const isConvidado = localStorage.getItem('modoConvidado') === 'true';
+            const userEmail = localStorage.getItem('userEmail');
+            
+            if (!isConvidado && !userEmail) {
+                window.location.href = 'cadastro.html';
+                return;
+            }
+            
+            carregarDadosPerfil();
+        };
+    </script>
+</body>
+</html>
