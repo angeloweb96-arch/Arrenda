@@ -1,0 +1,2319 @@
+<!DOCTYPE html>
+<html lang="pt-MZ">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#e67e22">
+    <meta name="description" content="ArrendaMoz - Sistema Inteligente de Contratos de Arrendamento em Moçambique">
+    
+    <title>ArrendaMoz - Dashboard</title>
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+    
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ==================== RESET E BASE ==================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --bg-primary: #f0f4f8;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --bg-input: #fafbfc;
+            --text-primary: #1a3a5c;
+            --text-secondary: #2c3e50;
+            --text-muted: #7f8c8d;
+            --border-color: #e8edf5;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.1);
+            --gradient-primary: linear-gradient(135deg, #e67e22, #d35400);
+            --gradient-secondary: linear-gradient(135deg, #1a3a5c, #2c5f8a);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --font: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        [data-theme="dark"] {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #1c2333;
+            --bg-input: #0d1117;
+            --text-primary: #f0f6fc;
+            --text-secondary: #c9d1d9;
+            --text-muted: #8b949e;
+            --border-color: #30363d;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            --shadow-hover: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+        
+        body {
+            font-family: var(--font);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 20px;
+            transition: var(--transition);
+        }
+        
+        /* ==================== CONTAINER ==================== */
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        /* ==================== HEADER ==================== */
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 16px 24px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            transition: var(--transition);
+            border: 1px solid var(--border-color);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.3);
+            flex-shrink: 0;
+        }
+        
+        .logo-text h1 {
+            font-size: 22px;
+            font-weight: 900;
+            background: var(--gradient-secondary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.2;
+        }
+        
+        .logo-text .subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+            -webkit-text-fill-color: var(--text-muted);
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .header-right .badge-version {
+            background: var(--gradient-primary);
+            color: white;
+            padding: 4px 14px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        
+        .btn-icon {
+            width: 40px;
+            height: 40px;
+            border: none;
+            border-radius: 12px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            text-decoration: none;
+        }
+        
+        .btn-icon:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+            background: var(--bg-card);
+        }
+        
+        .btn-icon .badge-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #e74c3c;
+            color: white;
+            font-size: 10px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            border: 2px solid var(--border-color);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+        
+        .user-avatar:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 20px rgba(230, 126, 34, 0.4);
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-info .name {
+            font-weight: 600;
+            font-size: 14px;
+            color: var(--text-primary);
+        }
+        
+        .user-info .role {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        
+        /* ==================== STATS CARDS ==================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin-bottom: 25px;
+        }
+        
+        .stat-card {
+            background: var(--bg-card);
+            padding: 18px 20px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .stat-icon.orange { background: var(--gradient-primary); }
+        .stat-icon.blue { background: linear-gradient(135deg, #3498db, #2980b9); }
+        .stat-icon.green { background: linear-gradient(135deg, #27ae60, #1e8449); }
+        .stat-icon.purple { background: linear-gradient(135deg, #8e44ad, #6c3483); }
+        .stat-icon.red { background: linear-gradient(135deg, #e74c3c, #c0392b); }
+        
+        .stat-info h3 {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+        
+        .stat-info p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        
+        /* ==================== NAVEGAÇÃO TABS ==================== */
+        .tab-nav {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            padding: 6px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius);
+            border: 1px solid var(--border-color);
+            margin-bottom: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .tab-nav button {
+            flex: 1;
+            min-width: 90px;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 13px;
+            transition: var(--transition);
+            background: transparent;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-family: var(--font);
+        }
+        
+        .tab-nav button i {
+            font-size: 15px;
+        }
+        
+        .tab-nav button:hover {
+            background: rgba(230, 126, 34, 0.08);
+            color: var(--text-primary);
+        }
+        
+        .tab-nav button.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.35);
+        }
+        
+        .tab-nav button.active i {
+            color: white;
+        }
+        
+        /* ==================== TABS ==================== */
+        .tab {
+            display: none;
+            animation: fadeSlideIn 0.4s ease;
+        }
+        
+        .tab.active {
+            display: block;
+        }
+        
+        @keyframes fadeSlideIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* ==================== CARDS ==================== */
+        .card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 22px 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+            padding-bottom: 14px;
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .card-header .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-header .icon-box {
+            width: 36px;
+            height: 36px;
+            background: var(--gradient-primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        
+        .card-header h3 {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        
+        .card-header .badge-card {
+            background: var(--bg-primary);
+            color: var(--text-muted);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        
+        /* ==================== FORMULÁRIO ==================== */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+        
+        .form-group label i {
+            color: #e67e22;
+            margin-right: 6px;
+            width: 16px;
+        }
+        
+        .form-group .required {
+            color: #e74c3c;
+        }
+        
+        input, textarea, select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 14px;
+            font-family: var(--font);
+            transition: var(--transition);
+            background: var(--bg-input);
+            color: var(--text-primary);
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            border-color: #e67e22;
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(230, 126, 34, 0.1);
+            background: var(--bg-card);
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: var(--text-muted);
+        }
+        
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%237f8c8d' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+            padding-right: 40px;
+        }
+        
+        .row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        
+        /* ==================== BOTÕES ==================== */
+        .btn {
+            padding: 12px 28px;
+            border: none;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font);
+            text-decoration: none;
+            justify-content: center;
+        }
+        
+        .btn i { font-size: 16px; }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(230, 126, 34, 0.35);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(230, 126, 34, 0.45);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.35);
+        }
+        
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(52, 152, 219, 0.45);
+        }
+        
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #1e8449);
+            color: white;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.35);
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(39, 174, 96, 0.45);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.35);
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(231, 76, 60, 0.45);
+        }
+        
+        .btn-purple {
+            background: linear-gradient(135deg, #8e44ad, #6c3483);
+            color: white;
+            box-shadow: 0 4px 15px rgba(142, 68, 173, 0.35);
+        }
+        
+        .btn-purple:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(142, 68, 173, 0.45);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            color: var(--text-muted);
+            border: 2px solid var(--border-color);
+        }
+        
+        .btn-outline:hover {
+            background: var(--bg-primary);
+            border-color: var(--text-muted);
+            transform: translateY(-2px);
+        }
+        
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .btn-group .btn {
+            flex: 1;
+            min-width: 120px;
+        }
+        
+        /* ==================== AVISO ==================== */
+        .aviso {
+            background: var(--bg-primary);
+            padding: 14px 20px;
+            border-radius: 12px;
+            border-left: 5px solid #e67e22;
+            margin: 15px 0;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .aviso i { color: #e67e22; margin-right: 8px; }
+        
+        /* ==================== TABELA AMORTIZAÇÃO ==================== */
+        .tabela-amortizacao {
+            overflow-x: auto;
+            margin: 15px 0;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .tabela-amortizacao table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        .tabela-amortizacao th {
+            background: var(--gradient-secondary);
+            color: white;
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .tabela-amortizacao td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+        
+        .tabela-amortizacao tr:hover td {
+            background: var(--bg-primary);
+        }
+        
+        .tabela-amortizacao tr:last-child td { border-bottom: none; }
+        
+        /* ==================== CANVAS ASSINATURA ==================== */
+        .canvas-container {
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius);
+            padding: 16px;
+            background: var(--bg-primary);
+            margin: 10px 0;
+            transition: var(--transition);
+        }
+        
+        .canvas-container:hover { border-color: #e67e22; }
+        
+        canvas {
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            cursor: crosshair;
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            background: white;
+            touch-action: none;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        /* ==================== LEMBRETE IMI ==================== */
+        .lembrete-imi {
+            background: var(--bg-primary);
+            padding: 20px;
+            border-radius: var(--radius);
+            border-left: 5px solid #f39c12;
+            margin: 10px 0;
+        }
+        
+        .lembrete-imi p { margin: 8px 0; color: var(--text-secondary); }
+        .lembrete-imi .data-vencimento { font-weight: 700; color: #c0392b; }
+        
+        /* ==================== ASSINATURA NO PDF ==================== */
+        .assinatura-no-pdf {
+            margin: 15px 0;
+            text-align: center;
+            padding: 20px;
+            background: var(--bg-primary);
+            border-radius: var(--radius);
+            border: 2px solid #27ae60;
+        }
+        
+        .assinatura-no-pdf img {
+            max-width: 300px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px;
+            background: white;
+            margin-top: 10px;
+        }
+        
+        /* ==================== PREVIEW CONTRATO ==================== */
+        #contratoPreview {
+            margin-top: 20px;
+            background: var(--bg-primary);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 25px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 500px;
+            overflow-y: auto;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+        
+        #contratoPreview::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        #contratoPreview::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+            border-radius: 8px;
+        }
+        
+        #contratoPreview::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 8px;
+        }
+        
+        /* ==================== MODAL ==================== */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .modal-content {
+            background: var(--bg-card);
+            margin: 10% auto;
+            padding: 35px;
+            border-radius: 24px;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .modal-content h3 {
+            margin-top: 0;
+            color: var(--text-primary);
+            font-size: 22px;
+        }
+        
+        .modal-content .close-modal {
+            float: right;
+            font-size: 28px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+        
+        .modal-content .close-modal:hover { color: var(--text-primary); }
+        
+        .modal-content .btn {
+            width: 100%;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        
+        /* ==================== EMAIL STATUS ==================== */
+        .email-status {
+            padding: 16px 20px;
+            border-radius: var(--radius);
+            margin: 15px 0;
+            display: none;
+        }
+        
+        .email-status.success {
+            display: block;
+            background: #d5f5e3;
+            border-left: 5px solid #27ae60;
+            color: #1a5a3a;
+        }
+        
+        .email-status.error {
+            display: block;
+            background: #fadbd8;
+            border-left: 5px solid #e74c3c;
+            color: #7a1a1a;
+        }
+        
+        /* ==================== TOAST ==================== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 16px 24px;
+            border-radius: var(--radius);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            border: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideInToast 0.5s ease;
+            z-index: 2000;
+            max-width: 400px;
+            font-family: var(--font);
+        }
+        
+        .toast i { font-size: 20px; }
+        .toast.success i { color: #27ae60; }
+        .toast.error i { color: #e74c3c; }
+        .toast.info i { color: #3498db; }
+        
+        @keyframes slideInToast {
+            from { opacity: 0; transform: translateX(100px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        /* ==================== RESPONSIVO ==================== */
+        @media (max-width: 992px) {
+            .header { flex-direction: column; align-items: stretch; gap: 12px; }
+            .header-left { justify-content: center; }
+            .header-right { justify-content: center; }
+            
+            .user-info .name { font-size: 13px; }
+        }
+        
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            
+            .header { padding: 14px 16px; }
+            .logo-text h1 { font-size: 18px; }
+            .logo-icon { width: 38px; height: 38px; font-size: 17px; }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 10px;
+            }
+            
+            .stat-card { padding: 14px 16px; }
+            .stat-info h3 { font-size: 17px; }
+            
+            .tab-nav button {
+                min-width: 60px;
+                padding: 8px 12px;
+                font-size: 11px;
+            }
+            
+            .tab-nav button i { font-size: 13px; }
+            .tab-nav button span { display: none; }
+            
+            .row { grid-template-columns: 1fr; }
+            .btn-group { flex-direction: column; }
+            .btn-group .btn { width: 100%; }
+            
+            .modal-content { margin: 20% auto; padding: 25px; }
+            
+            .toast {
+                left: 20px;
+                right: 20px;
+                bottom: 20px;
+                max-width: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .stat-card { flex-direction: column; text-align: center; }
+            .stat-info h3 { font-size: 15px; }
+            
+            .card { padding: 16px; }
+            .card-header h3 { font-size: 15px; }
+            
+            .user-avatar { width: 34px; height: 34px; font-size: 14px; }
+        }
+        
+        /* ==================== SCROLLBAR ==================== */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-primary);
+            border-radius: 8px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 8px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--text-muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <!-- ==================== HEADER ==================== -->
+        <header class="header">
+            <div class="header-left">
+                <div class="logo-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>ArrendaMoz</h1>
+                    <span class="subtitle">
+                        <i class="fas fa-gavel"></i> Sistema Inteligente de Contratos
+                    </span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <span class="badge-version"><i class="fas fa-code-branch"></i> v3.0</span>
+                
+                <button class="btn-icon" onclick="toggleDarkMode()" title="Alternar tema">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                </button>
+                
+                <button class="btn-icon" onclick="mostrarNotificacoes()" title="Notificações" style="position:relative;">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge-count" id="notifCount">3</span>
+                </button>
+                
+                <a href="perfil.html" class="btn-icon" title="Perfil">
+                    <i class="fas fa-user-circle"></i>
+                </a>
+                
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar" onclick="window.location.href='perfil.html'">
+                        <span id="userInitial">U</span>
+                    </div>
+                    <div>
+                        <div class="name" id="userName">Usuário</div>
+                        <div class="role" id="userRole">Verificado</div>
+                    </div>
+                </div>
+                
+                <button class="btn-icon" onclick="logout()" title="Sair" style="color:#e74c3c;">
+                    <i class="fas fa-sign-out-alt"></i>
+                </button>
+            </div>
+        </header>
+        
+        <!-- ==================== STATS ==================== -->
+        <div class="stats-grid" id="statsGrid">
+            <div class="stat-card">
+                <div class="stat-icon orange"><i class="fas fa-file-contract"></i></div>
+                <div class="stat-info">
+                    <h3 id="totalContratos">0</h3>
+                    <p>Total de Contratos</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon blue"><i class="fas fa-users"></i></div>
+                <div class="stat-info">
+                    <h3 id="totalClientes">0</h3>
+                    <p>Clientes / Inquilinos</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon green"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-info">
+                    <h3 id="contratosAtivos">0</h3>
+                    <p>Contratos Ativos</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple"><i class="fas fa-money-bill-wave"></i></div>
+                <div class="stat-info">
+                    <h3 id="totalRendas">0 MZN</h3>
+                    <p>Renda Total</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon red"><i class="fas fa-exclamation-triangle"></i></div>
+                <div class="stat-info">
+                    <h3 id="vencendoHoje">0</h3>
+                    <p>Vencem Hoje</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ==================== NAVEGAÇÃO TABS ==================== -->
+        <nav class="tab-nav">
+            <button class="active" onclick="abrirTab('tabContrato')">
+                <i class="fas fa-file-signature"></i> <span>Contrato</span>
+            </button>
+            <button onclick="abrirTab('tabAmortizacao')">
+                <i class="fas fa-chart-line"></i> <span>Amortização</span>
+            </button>
+            <button onclick="abrirTab('tabAssinatura')">
+                <i class="fas fa-pen-fancy"></i> <span>Assinatura</span>
+            </button>
+            <button onclick="abrirTab('tabLembrete')">
+                <i class="fas fa-bell"></i> <span>Lembrete IMI</span>
+            </button>
+            <button onclick="abrirTab('tabEmail')">
+                <i class="fas fa-envelope"></i> <span>Email</span>
+            </button>
+            <button onclick="abrirTab('tabHistorico')">
+                <i class="fas fa-history"></i> <span>Histórico</span>
+            </button>
+        </nav>
+        
+        <!-- ============================================================ -->
+        <!-- TAB 1: CONTRATO                                              -->
+        <!-- ============================================================ -->
+        <div id="tabContrato" class="tab active">
+            <div class="aviso">
+                <i class="fas fa-shield-alt"></i>
+                <strong>Nota legal:</strong> Modelo conforme o <em>Regulamento do Arrendamento Urbano</em> de Moçambique.
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-edit"></i></div>
+                        <h3>Informações do Contrato</h3>
+                    </div>
+                    <span class="badge-card">Obrigatório</span>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> Tipo de Contrato</label>
+                        <select id="tipoContrato" onchange="atualizarCamposPorTipo()">
+                            <option value="habitacao"><i class="fas fa-home"></i> Habitação</option>
+                            <option value="comercial"><i class="fas fa-store"></i> Comercial</option>
+                            <option value="rural"><i class="fas fa-tractor"></i> Rural</option>
+                            <option value="temporada"><i class="fas fa-umbrella-beach"></i> Temporada</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-day"></i> Data do Contrato</label>
+                        <input id="dataContrato" type="date" value="2026-08-15">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-users"></i></div>
+                        <h3>Partes Envolvidas</h3>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user-tie"></i> Senhorio <span class="required">*</span></label>
+                        <input id="senhorio" value="João dos Santos" placeholder="Nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-id-card"></i> BI/Passaporte</label>
+                        <input id="biSenhorio" value="123456789MZ">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Inquilino <span class="required">*</span></label>
+                        <input id="inquilino" value="Maria António" placeholder="Nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-id-card"></i> BI/Passaporte</label>
+                        <input id="biInquilino" value="987654321MZ">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-map-pin"></i></div>
+                        <h3>Imóvel e Valores</h3>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-location-dot"></i> Morada do Imóvel <span class="required">*</span></label>
+                    <input id="morada" value="Bairro da Polana, Rua 123, Nº 45, Maputo">
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label><i class="fas fa-money-bill-wave"></i> Renda Mensal (MZN)</label>
+                        <input id="renda" type="number" value="25000" oninput="calcularIMI(); gerarAmortizacao();">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i> Valor Patrimonial (opcional)</label>
+                        <input id="valorPatrimonial" type="number" placeholder="Deixe em branco" oninput="calcularIMI();">
+                    </div>
+                </div>
+                
+                <div class="aviso" id="infoIMI" style="border-left-color: #3498db; background: var(--bg-primary);">
+                    <i class="fas fa-calculator" style="color: #3498db;"></i>
+                    <strong>IMI Estimado:</strong> <span id="detalheIMI">Insira a renda para calcular</span>
+                </div>
+                
+                <div class="row">
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-plus"></i> Data de Início</label>
+                        <input id="dataInicio" type="date" value="2026-09-01" onchange="gerarAmortizacao()">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-clock"></i> Duração (meses)</label>
+                        <input id="duracao" type="number" value="12" onchange="gerarAmortizacao()">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-check"></i> Dia Vencimento</label>
+                        <input id="diaVenc" type="number" value="5" min="1" max="31">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-hand-holding-usd"></i> Caução (opcional)</label>
+                        <input id="caucao" type="number" placeholder="Ex: 25000" value="25000">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Campos específicos -->
+            <div id="camposEspecificos">
+                <div class="card" id="campoComercial" style="display:none;">
+                    <div class="card-header">
+                        <div class="left">
+                            <div class="icon-box"><i class="fas fa-store"></i></div>
+                            <h3>Dados Comerciais</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label><i class="fas fa-briefcase"></i> Ramo de Atividade</label>
+                            <input id="ramoAtividade" placeholder="Ex: Comércio de roupas">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-file-contract"></i> Alvará Nº</label>
+                            <input id="alvara" placeholder="Nº do alvará">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" id="campoRural" style="display:none;">
+                    <div class="card-header">
+                        <div class="left">
+                            <div class="icon-box"><i class="fas fa-tractor"></i></div>
+                            <h3>Dados Rurais</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label><i class="fas fa-vector-square"></i> Área (hectares)</label>
+                            <input id="areaHectares" type="number" placeholder="Área cultivada">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-seedling"></i> Cultura/Tipo</label>
+                            <input id="cultura" placeholder="Ex: Milho, feijão">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" id="campoTemporada" style="display:none;">
+                    <div class="card-header">
+                        <div class="left">
+                            <div class="icon-box"><i class="fas fa-umbrella-beach"></i></div>
+                            <h3>Dados de Temporada</h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-alt"></i> Período</label>
+                            <input id="periodoTemp" placeholder="Ex: Dez-Fev">
+                        </div>
+                        <div class="form-group">
+                            <label><i class="fas fa-users"></i> Nº Hóspedes</label>
+                            <input id="numHospedes" type="number" placeholder="Capacidade">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-pen"></i></div>
+                        <h3>Cláusulas Especiais</h3>
+                    </div>
+                </div>
+                <textarea id="clausulas" rows="3" placeholder="Digite cláusulas adicionais...">O arrendatário compromete-se a realizar pequenas reparações até 5.000 MZN.</textarea>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-primary" onclick="gerarContrato()">
+                    <i class="fas fa-file-alt"></i> Gerar Contrato
+                </button>
+                <button class="btn btn-secondary" onclick="baixarPDF()" id="btnPDF" style="display:none;">
+                    <i class="fas fa-file-pdf"></i> Baixar PDF
+                </button>
+                <button class="btn btn-purple" onclick="baixarPDFComAssinatura()" id="btnPDFAssinatura" style="display:none;">
+                    <i class="fas fa-pen-fancy"></i> PDF c/ Assinatura
+                </button>
+                <button class="btn btn-success" onclick="imprimirContrato()" id="btnImprimir" style="display:none;">
+                    <i class="fas fa-print"></i> Imprimir
+                </button>
+            </div>
+            
+            <div id="contratoPreview" style="display:none;"></div>
+        </div>
+        
+        <!-- ============================================================ -->
+        <!-- TAB 2: AMORTIZAÇÃO                                            -->
+        <!-- ============================================================ -->
+        <div id="tabAmortizacao" class="tab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-chart-line"></i></div>
+                        <h3>Tabela de Amortização</h3>
+                    </div>
+                    <span class="badge-card">Cronograma</span>
+                </div>
+                
+                <div class="tabela-amortizacao" id="tabelaAmortizacao">
+                    <p style="padding:20px; color:var(--text-muted); text-align:center;">
+                        <i class="fas fa-info-circle"></i> Preencha a renda, data de início e duração.
+                    </p>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="gerarAmortizacao()">
+                        <i class="fas fa-sync-alt"></i> Atualizar
+                    </button>
+                    <button class="btn btn-success" onclick="baixarAmortizacaoCSV()">
+                        <i class="fas fa-file-csv"></i> Baixar CSV
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================================ -->
+        <!-- TAB 3: ASSINATURA                                             -->
+        <!-- ============================================================ -->
+        <div id="tabAssinatura" class="tab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-pen-fancy"></i></div>
+                        <h3>Assinatura Digital</h3>
+                    </div>
+                    <span class="badge-card">Segura</span>
+                </div>
+                
+                <p style="color:var(--text-muted); margin-bottom:15px;">
+                    <i class="fas fa-mouse-pointer" style="color:#e67e22;"></i>
+                    Desenhe sua assinatura com o mouse ou dedo (touch).
+                </p>
+                
+                <div class="canvas-container">
+                    <canvas id="canvasAssinatura" width="500" height="200"></canvas>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-danger" onclick="limparAssinatura()">
+                        <i class="fas fa-trash-alt"></i> Limpar
+                    </button>
+                    <button class="btn btn-secondary" onclick="baixarAssinatura()">
+                        <i class="fas fa-download"></i> Baixar PNG
+                    </button>
+                    <button class="btn btn-purple" onclick="usarAssinaturaNoPDF()">
+                        <i class="fas fa-check-circle"></i> Inserir no Contrato
+                    </button>
+                </div>
+                
+                <div id="assinaturasSalvas" style="margin-top:15px;"></div>
+                
+                <div id="areaAssinaturaPDF" style="display:none;" class="assinatura-no-pdf">
+                    <i class="fas fa-check-circle" style="color:#27ae60; font-size:24px;"></i>
+                    <h4 style="margin:10px 0; color:#27ae60;">Assinatura será incluída no PDF</h4>
+                    <img id="previewAssinaturaPDF" src="" alt="Assinatura no PDF" />
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================================ -->
+        <!-- TAB 4: LEMBRETE IMI                                           -->
+        <!-- ============================================================ -->
+        <div id="tabLembrete" class="tab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-bell"></i></div>
+                        <h3>Lembrete de Vencimento do IMI</h3>
+                    </div>
+                    <span class="badge-card">Alerta</span>
+                </div>
+                
+                <div class="lembrete-imi">
+                    <p><i class="fas fa-calculator"></i> <strong>IMI estimado:</strong> <span id="imiLembreteValor" style="font-weight:700; color:var(--text-primary);">--</span> MZN/ano</p>
+                    <p><i class="fas fa-calendar-day"></i> <strong>Vencimento:</strong> <span class="data-vencimento" id="dataVencimentoIMI">--</span></p>
+                    <p><i class="fas fa-hourglass-half"></i> <strong>Dias restantes:</strong> <span id="diasRestantesIMI" style="font-weight:700;">--</span></p>
+                    
+                    <div class="btn-group" style="margin-top:15px;">
+                        <button class="btn btn-secondary" onclick="configurarLembreteIMI()">
+                            <i class="fas fa-check-double"></i> Configurar
+                        </button>
+                        <button class="btn btn-success" onclick="enviarLembreteEmail()">
+                            <i class="fas fa-envelope"></i> Enviar Email
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-history"></i></div>
+                        <h3>Histórico de Lembretes</h3>
+                    </div>
+                </div>
+                <div id="listaHistorico">
+                    <p style="color:var(--text-muted);"><i class="fas fa-info-circle"></i> Nenhum lembrete configurado.</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ============================================================ -->
+        <!-- TAB 5: EMAIL                                                  -->
+        <!-- ============================================================ -->
+        <div id="tabEmail" class="tab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                        <h3>Enviar Contrato por Email</h3>
+                    </div>
+                    <span class="badge-card">Compartilhar</span>
+                </div>
+                
+                <div class="aviso">
+                    <i class="fas fa-lightbulb"></i>
+                    <strong>Dica:</strong> Gere o contrato primeiro na aba "Contrato".
+                </div>
+                
+                <div class="form-group">
+                    <label><i class="fas fa-user-circle"></i> Email do Remetente</label>
+                    <input id="emailRemetente" type="email" placeholder="seu@email.com" value="contato@arrendamoz.com">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-user-friends"></i> Email do Destinatário</label>
+                    <input id="emailDestinatario" type="email" placeholder="destinatario@email.com" value="cliente@empresa.com">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-tag"></i> Assunto</label>
+                    <input id="assuntoEmail" type="text" value="Contrato de Arrendamento - ArrendaMoz">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-comment"></i> Mensagem</label>
+                    <textarea id="corpoEmail" rows="4">Prezado(a),
+
+Segue o contrato de arrendamento para sua análise.
+
+Atenciosamente,
+Equipe ArrendaMoz</textarea>
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-pen-fancy"></i> Incluir assinatura?</label>
+                    <select id="incluirAssinaturaEmail">
+                        <option value="sim"><i class="fas fa-check-circle" style="color:#27ae60;"></i> Sim</option>
+                        <option value="nao"><i class="fas fa-times-circle" style="color:#e74c3c;"></i> Não</option>
+                    </select>
+                </div>
+                
+                <button class="btn btn-success" onclick="enviarContratoEmail()" style="width:100%; justify-content:center;">
+                    <i class="fas fa-paper-plane"></i> Enviar Contrato
+                </button>
+                
+                <div id="emailStatus" class="email-status"></div>
+            </div>
+        </div>
+        
+        <!-- ============================================================ -->
+        <!-- TAB 6: HISTÓRICO                                              -->
+        <!-- ============================================================ -->
+        <div id="tabHistorico" class="tab">
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-history"></i></div>
+                        <h3>Histórico de Contratos</h3>
+                    </div>
+                    <span class="badge-card">Arquivo</span>
+                </div>
+                
+                <div id="listaContratos">
+                    <p style="color:var(--text-muted); text-align:center; padding:30px;">
+                        <i class="fas fa-inbox" style="font-size:32px; display:block; margin-bottom:10px;"></i>
+                        Nenhum contrato gerado ainda.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <div class="left">
+                        <div class="icon-box"><i class="fas fa-envelope"></i></div>
+                        <h3>Histórico de Envios</h3>
+                    </div>
+                </div>
+                <div id="listaEnvios">
+                    <p style="color:var(--text-muted); text-align:center; padding:30px;">
+                        <i class="fas fa-envelope-open" style="font-size:32px; display:block; margin-bottom:10px;"></i>
+                        Nenhum envio realizado.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ==================== MODAL ==================== -->
+    <div id="modalEmail" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="fecharModal('modalEmail')">&times;</span>
+            <h3><i class="fas fa-envelope" style="color:#e67e22;"></i> Confirmar Envio</h3>
+            <div id="modalMensagem" style="margin:20px 0; line-height:1.8;"></div>
+            <button class="btn btn-success" onclick="confirmarEnvioEmail()">
+                <i class="fas fa-check"></i> Confirmar Envio
+            </button>
+            <button class="btn btn-danger" onclick="fecharModal('modalEmail')" style="margin-top:8px;">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+        </div>
+    </div>
+    
+    <!-- ==================== SCRIPTS ==================== -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    
+    <script>
+        // ==================== VERIFICAÇÃO DE AUTENTICAÇÃO ====================
+        function verificarAutenticacao() {
+            const isConvidado = localStorage.getItem('modoConvidado') === 'true';
+            const userEmail = localStorage.getItem('userEmail');
+            const verificado = localStorage.getItem('verificado') === 'true';
+            
+            // Se não estiver logado e não for convidado, redirecionar para login
+            if (!userEmail && !isConvidado) {
+                window.location.href = 'cadastro.html';
+                return false;
+            }
+            
+            // Se não estiver verificado, redirecionar para login
+            if (!verificado && !isConvidado) {
+                window.location.href = 'cadastro.html';
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // ==================== CARREGAR DADOS DO USUÁRIO ====================
+        function carregarDadosUsuario() {
+            const nome = localStorage.getItem('userNome') || 'Usuário';
+            const email = localStorage.getItem('userEmail') || 'convidado@arrendamoz.com';
+            const isConvidado = localStorage.getItem('modoConvidado') === 'true';
+            
+            document.getElementById('userName').textContent = nome;
+            document.getElementById('userInitial').textContent = nome.charAt(0).toUpperCase();
+            document.getElementById('userRole').textContent = isConvidado ? 'Convidado' : 'Verificado';
+            
+            // Atualizar nome nos campos do formulário
+            const senhorio = document.getElementById('senhorio');
+            if (senhorio && !senhorio.value) {
+                senhorio.value = nome;
+            }
+        }
+        
+        // ==================== LOGOUT ====================
+        function logout() {
+            if (confirm('Deseja realmente sair?')) {
+                localStorage.removeItem('userEmail');
+                localStorage.removeItem('userNome');
+                localStorage.removeItem('modoConvidado');
+                localStorage.removeItem('verificado');
+                window.location.href = 'cadastro.html';
+            }
+        }
+        
+        // ==================== VARIÁVEIS GLOBAIS ====================
+        let contratoTexto = "";
+        let imiCalculado = 0;
+        let dadosAmortizacao = [];
+        let assinaturaDataURL = "";
+        let usarAssinaturaPDF = false;
+        let historicoLembretes = JSON.parse(localStorage.getItem('historicoLembretesIMI')) || [];
+        let contratosSalvos = JSON.parse(localStorage.getItem('contratosSalvos')) || [];
+        let enviosRealizados = JSON.parse(localStorage.getItem('historicoEnvios')) || [];
+        let dadosEmail = {};
+        
+        // ==================== NAVEGAÇÃO TABS ====================
+        function abrirTab(id) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-nav button').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            if (event && event.target) {
+                event.target.classList.add('active');
+            }
+        }
+        
+        // ==================== TIPOS DE CONTRATO ====================
+        function atualizarCamposPorTipo() {
+            const tipo = document.getElementById('tipoContrato').value;
+            document.getElementById('campoComercial').style.display = tipo === 'comercial' ? 'block' : 'none';
+            document.getElementById('campoRural').style.display = tipo === 'rural' ? 'block' : 'none';
+            document.getElementById('campoTemporada').style.display = tipo === 'temporada' ? 'block' : 'none';
+        }
+        
+        // ==================== CÁLCULO IMI ====================
+        function calcularIMI() {
+            const rendaMensal = parseFloat(document.getElementById('renda').value) || 0;
+            const valorPatrimonial = parseFloat(document.getElementById('valorPatrimonial').value);
+            
+            let baseCalculo = 0, origem = "";
+            if (valorPatrimonial && valorPatrimonial > 0) {
+                baseCalculo = valorPatrimonial;
+                origem = "Valor patrimonial";
+            } else if (rendaMensal > 0) {
+                baseCalculo = rendaMensal * 12;
+                origem = `Renda anual (${rendaMensal} × 12)`;
+            } else {
+                document.getElementById('detalheIMI').innerHTML = 'Insira o valor da renda ou patrimonial.';
+                document.getElementById('imiLembreteValor').textContent = '--';
+                return;
+            }
+            
+            const aliquota = 0.005;
+            imiCalculado = baseCalculo * aliquota;
+            const imiFormat = imiCalculado.toLocaleString('pt-MZ', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('detalheIMI').innerHTML = `Base: ${origem} = ${baseCalculo.toLocaleString('pt-MZ')} MZN × 0,5% = <strong>${imiFormat} MZN/ano</strong>`;
+            document.getElementById('imiLembreteValor').textContent = imiFormat;
+            
+            const hoje = new Date();
+            const anoVenc = hoje.getFullYear() + 1;
+            const dataVenc = new Date(anoVenc, 1, 28);
+            document.getElementById('dataVencimentoIMI').textContent = dataVenc.toLocaleDateString('pt-MZ');
+            
+            const diff = Math.ceil((dataVenc - hoje) / (1000 * 60 * 60 * 24));
+            document.getElementById('diasRestantesIMI').textContent = diff > 0 ? `${diff} dias` : 'Vencido!';
+        }
+        
+        // ==================== AMORTIZAÇÃO ====================
+        function gerarAmortizacao() {
+            const renda = parseFloat(document.getElementById('renda').value) || 0;
+            const inicio = document.getElementById('dataInicio').value;
+            const duracao = parseInt(document.getElementById('duracao').value) || 0;
+            
+            if (!renda || !inicio || !duracao) {
+                document.getElementById('tabelaAmortizacao').innerHTML = `
+                    <p style="padding:20px; color:var(--text-muted); text-align:center;">
+                        <i class="fas fa-info-circle"></i> Preencha a renda, data de início e duração.
+                    </p>
+                `;
+                return;
+            }
+            
+            const dataInicio = new Date(inicio);
+            let html = `<table>
+                <thead><tr><th>#</th><th>Mês/Ano</th><th>Valor</th><th>Acumulado</th><th>Status</th></tr></thead>
+                <tbody>`;
+            
+            let acumulado = 0;
+            dadosAmortizacao = [];
+            for (let i = 0; i < duracao; i++) {
+                const mes = new Date(dataInicio);
+                mes.setMonth(mes.getMonth() + i);
+                const mesAno = mes.toLocaleDateString('pt-MZ', {month: 'long', year: 'numeric'});
+                acumulado += renda;
+                const status = i < 3 ? '✅ Pago' : (i < 6 ? '🟡 Pendente' : '🔵 Futuro');
+                dadosAmortizacao.push({mes: mesAno, valor: renda, acumulado: acumulado, status: status});
+                html += `<tr><td>${i+1}</td><td>${mesAno}</td><td>${renda.toFixed(2)} MZN</td><td>${acumulado.toFixed(2)} MZN</td><td>${status}</td></tr>`;
+            }
+            html += `</tbody></table>`;
+            document.getElementById('tabelaAmortizacao').innerHTML = html;
+        }
+        
+        function baixarAmortizacaoCSV() {
+            if (dadosAmortizacao.length === 0) { mostrarToast('Gere a tabela primeiro!', 'error'); return; }
+            let csv = 'Mês/Ano,Valor da Renda (MZN),Acumulado (MZN),Status\n';
+            dadosAmortizacao.forEach(d => {
+                csv += `${d.mes},${d.valor.toFixed(2)},${d.acumulado.toFixed(2)},${d.status}\n`;
+            });
+            const blob = new Blob([csv], {type: 'text/csv'});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = 'amortizacao_rendas.csv';
+            link.click();
+            mostrarToast('CSV baixado com sucesso!', 'success');
+        }
+        
+        // ==================== ASSINATURA ====================
+        let desenhando = false;
+        const canvas = document.getElementById('canvasAssinatura');
+        const ctx = canvas.getContext('2d');
+        ctx.lineWidth = 2.5;
+        ctx.strokeStyle = '#1a3a5c';
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        
+        function getPosicao(e) {
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            let clientX, clientY;
+            if (e.touches) {
+                clientX = e.touches[0].clientX;
+                clientY = e.touches[0].clientY;
+                e.preventDefault();
+            } else {
+                clientX = e.clientX;
+                clientY = e.clientY;
+            }
+            return {
+                x: (clientX - rect.left) * scaleX,
+                y: (clientY - rect.top) * scaleY
+            };
+        }
+        
+        function iniciarDesenho(e) {
+            desenhando = true;
+            const pos = getPosicao(e);
+            ctx.beginPath();
+            ctx.moveTo(pos.x, pos.y);
+        }
+        
+        function desenhar(e) {
+            if (!desenhando) return;
+            const pos = getPosicao(e);
+            ctx.lineTo(pos.x, pos.y);
+            ctx.stroke();
+        }
+        
+        function pararDesenho() {
+            desenhando = false;
+            salvarAssinatura();
+        }
+        
+        canvas.addEventListener('mousedown', iniciarDesenho);
+        canvas.addEventListener('mousemove', desenhar);
+        canvas.addEventListener('mouseup', pararDesenho);
+        canvas.addEventListener('mouseleave', pararDesenho);
+        canvas.addEventListener('touchstart', iniciarDesenho);
+        canvas.addEventListener('touchmove', desenhar);
+        canvas.addEventListener('touchend', pararDesenho);
+        
+        function salvarAssinatura() {
+            assinaturaDataURL = canvas.toDataURL('image/png');
+            const div = document.getElementById('assinaturasSalvas');
+            if (assinaturaDataURL) {
+                div.innerHTML = `
+                    <div style="display:inline-block; margin-top:10px; padding:10px; border:1px solid var(--border-color); border-radius:12px; background:var(--bg-card);">
+                        <img src="${assinaturaDataURL}" width="150" style="border-radius:6px;" />
+                        <p style="font-size:12px; color:var(--text-muted); margin-top:5px;"><i class="fas fa-check-circle" style="color:#27ae60;"></i> Assinatura salva</p>
+                    </div>
+                `;
+                localStorage.setItem('assinaturaSalva', assinaturaDataURL);
+            }
+        }
+        
+        function limparAssinatura() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            assinaturaDataURL = "";
+            document.getElementById('assinaturasSalvas').innerHTML = '';
+            usarAssinaturaPDF = false;
+            document.getElementById('areaAssinaturaPDF').style.display = 'none';
+            document.getElementById('btnPDFAssinatura').style.display = 'none';
+            mostrarToast('Assinatura limpa!', 'info');
+        }
+        
+        function baixarAssinatura() {
+            if (!assinaturaDataURL) { mostrarToast('Desenhe uma assinatura primeiro!', 'error'); return; }
+            const link = document.createElement('a');
+            link.href = assinaturaDataURL;
+            link.download = 'assinatura_arrendamoz.png';
+            link.click();
+            mostrarToast('Assinatura baixada!', 'success');
+        }
+        
+        function usarAssinaturaNoPDF() {
+            if (!assinaturaDataURL) { mostrarToast('Desenhe uma assinatura primeiro!', 'error'); return; }
+            usarAssinaturaPDF = true;
+            document.getElementById('areaAssinaturaPDF').style.display = 'block';
+            document.getElementById('previewAssinaturaPDF').src = assinaturaDataURL;
+            document.getElementById('btnPDFAssinatura').style.display = 'inline-flex';
+            mostrarToast('✅ Assinatura ativada para o PDF!', 'success');
+        }
+        
+        // ==================== GERAR CONTRATO ====================
+        function gerarContrato() {
+            const s = document.getElementById('senhorio').value || "Senhorio";
+            const biS = document.getElementById('biSenhorio').value || "BI";
+            const i = document.getElementById('inquilino').value || "Inquilino";
+            const biI = document.getElementById('biInquilino').value || "BI";
+            const morada = document.getElementById('morada').value || "Morada do imóvel";
+            const renda = document.getElementById('renda').value || "0";
+            const inicio = document.getElementById('dataInicio').value || "2026-09-01";
+            const duracao = document.getElementById('duracao').value || "12";
+            const diaVenc = document.getElementById('diaVenc').value || "5";
+            const caucao = document.getElementById('caucao').value || "0";
+            const extras = document.getElementById('clausulas').value || "";
+            const tipo = document.getElementById('tipoContrato').value;
+            const dataContrato = document.getElementById('dataContrato').value || new Date().toISOString().split('T')[0];
+            
+            const tipoMap = {
+                'habitacao': 'Habitação',
+                'comercial': 'Comercial',
+                'rural': 'Rural (Agrícola)',
+                'temporada': 'Temporada/Férias'
+            };
+            
+            if (imiCalculado === 0) calcularIMI();
+            
+            const dataFim = new Date(inicio);
+            dataFim.setMonth(dataFim.getMonth() + parseInt(duracao));
+            const fimStr = dataFim.toLocaleDateString('pt-MZ');
+            
+            const rendaFormat = parseFloat(renda).toLocaleString('pt-MZ', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            const imiFormat = imiCalculado.toLocaleString('pt-MZ', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            const caucaoFormat = parseFloat(caucao).toLocaleString('pt-MZ', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            
+            let clausulasEspecificas = "";
+            if (tipo === 'comercial') {
+                const ramo = document.getElementById('ramoAtividade').value || 'não especificado';
+                const alvara = document.getElementById('alvara').value || 'não informado';
+                clausulasEspecificas = `Destina-se ao exercício da atividade de ${ramo}, alvará nº ${alvara}.`;
+            } else if (tipo === 'rural') {
+                const area = document.getElementById('areaHectares').value || 'não especificada';
+                const cultura = document.getElementById('cultura').value || 'não especificada';
+                clausulasEspecificas = `Área de ${area} hectares, destinada ao cultivo de ${cultura}.`;
+            } else if (tipo === 'temporada') {
+                const periodo = document.getElementById('periodoTemp').value || 'período a definir';
+                const hospedes = document.getElementById('numHospedes').value || 'não especificado';
+                clausulasEspecificas = `Período: ${periodo}. Capacidade: ${hospedes} hóspedes.`;
+            }
+            
+            let assinaturaTexto = "";
+            if (usarAssinaturaPDF && assinaturaDataURL) {
+                assinaturaTexto = `\n\nASSINATURA DIGITAL DO ARRENDADOR:\n[Assinatura incluída no PDF - ArrendaMoz]\n`;
+            }
+            
+            const nomeUsuario = localStorage.getItem('userNome') || 'Usuário';
+            
+            contratoTexto = 
+`CONTRATO DE ARRENDAMENTO - ${tipoMap[tipo].toUpperCase()}
+ARREENDA MOZ - SISTEMA INTELIGENTE DE CONTRATOS
+Gerado por: ${nomeUsuario}
+
+Pelo presente instrumento particular, de um lado, ${s}, moçambicano, portador do BI nº ${biS}, residente na cidade de Maputo, doravante designado "ARRENDADOR", e do outro lado, ${i}, moçambicano, portador do BI nº ${biI}, residente na morada supra, doravante designado "ARRENDATÁRIO", celebram o presente contrato de arrendamento do tipo ${tipoMap[tipo]}, nos termos da lei moçambicana, mediante as seguintes cláusulas:
+
+1. OBJECTO
+O ARRENDADOR dá de arrendamento ao ARRENDATÁRIO, que aceita, o imóvel sito em ${morada}, para fins de ${tipo === 'comercial' ? 'atividade comercial' : tipo === 'rural' ? 'exploração agrícola' : tipo === 'temporada' ? 'temporada de férias' : 'habitação'}.
+
+2. PRAZO
+O presente contrato tem a duração de ${duracao} meses, com início em ${inicio} e término em ${fimStr}, podendo ser renovado por acordo escrito entre as partes.
+
+3. RENDA E PAGAMENTO
+A renda mensal é de ${rendaFormat} MZN, a pagar até o dia ${diaVenc} de cada mês, na morada do ARRENDADOR ou por transferência bancária a indicar.
+
+4. CAUÇÃO
+O ARRENDATÁRIO deposita, a título de caução, o valor de ${caucaoFormat} MZN, que será devolvido no final do contrato, deduzidas as quantias devidas.
+
+5. IMI (IMPOSTO MUNICIPAL SOBRE IMÓVEIS)
+O IMI, no valor estimado de ${imiFormat} MZN/ano, é da inteira responsabilidade do ARRENDADOR, nos termos da legislação moçambicana.
+
+6. ENCARGOS E RESPONSABILIDADES
+São da responsabilidade do ARRENDATÁRIO as despesas de água, luz, gás e condomínio. O IMI é da responsabilidade do ARRENDADOR.
+
+7. REPARAÇÕES
+O ARRENDATÁRIO obriga-se a conservar o imóvel e a realizar pequenas reparações até 5.000 MZN. Grandes reparações são da responsabilidade do ARRENDADOR.
+
+8. RESCISÃO
+O contrato pode ser rescindido mediante aviso prévio de 30 dias. Em caso de rescisão antecipada sem justa causa, a parte infratora pagará multa de 2 rendas.
+
+9. DISPOSIÇÕES ESPECÍFICAS
+${clausulasEspecificas || 'Nenhuma disposição específica.'}
+
+10. FORO
+Fica eleito o Tribunal Judicial da Cidade de Maputo para dirimir quaisquer controvérsias.
+
+11. CLÁUSULAS ESPECIAIS
+${extras || "Nenhuma cláusula especial adicional."}
+
+E, por estarem justos e contratados, as partes assinam o presente contrato em duas vias de igual teor, na presença de duas testemunhas.
+
+Maputo, ${new Date(dataContrato).toLocaleDateString('pt-MZ')}
+
+__________________________________
+${s} (Arrendador)
+
+__________________________________
+${i} (Arrendatário)
+
+Testemunhas:
+1. ___________________
+2. ___________________
+${assinaturaTexto}
+
+--- Documento gerado pelo ArrendaMoz v3.0 ---`;
+            
+            const preview = document.getElementById('contratoPreview');
+            preview.style.display = 'block';
+            preview.textContent = contratoTexto;
+            document.getElementById('btnPDF').style.display = 'inline-flex';
+            document.getElementById('btnImprimir').style.display = 'inline-flex';
+            if (usarAssinaturaPDF && assinaturaDataURL) {
+                document.getElementById('btnPDFAssinatura').style.display = 'inline-flex';
+            }
+            
+            // Salvar no histórico
+            const contrato = {
+                tipo: tipoMap[tipo],
+                senhorio: s,
+                inquilino: i,
+                morada: morada,
+                renda: renda,
+                data_inicio: inicio,
+                duracao: duracao,
+                status: 'ativo',
+                created_at: new Date().toISOString()
+            };
+            contratosSalvos.unshift(contrato);
+            localStorage.setItem('contratosSalvos', JSON.stringify(contratosSalvos));
+            atualizarStats();
+            atualizarHistorico();
+            
+            // Scroll para o preview
+            setTimeout(() => {
+                preview.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+            
+            mostrarToast('✅ Contrato gerado com sucesso!', 'success');
+        }
+        
+        // ==================== BAIXAR PDF ====================
+        function baixarPDF() {
+            const preview = document.getElementById('contratoPreview');
+            if (!preview.textContent.trim()) { mostrarToast('Gere o contrato primeiro!', 'error'); return; }
+            
+            const temp = document.createElement('div');
+            temp.style.padding = '30px';
+            temp.style.fontFamily = 'Arial, sans-serif';
+            temp.style.fontSize = '12px';
+            temp.style.whiteSpace = 'pre-wrap';
+            temp.style.background = 'white';
+            temp.style.lineHeight = '1.6';
+            temp.textContent = preview.textContent;
+            document.body.appendChild(temp);
+            
+            html2pdf().from(temp).set({
+                margin: [15, 15],
+                filename: `contrato_${document.getElementById('tipoContrato').value}_ArrendaMoz.pdf`,
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save().then(() => {
+                document.body.removeChild(temp);
+                mostrarToast('📄 PDF baixado com sucesso!', 'success');
+            });
+        }
+        
+        // ==================== BAIXAR PDF COM ASSINATURA ====================
+        function baixarPDFComAssinatura() {
+            if (!usarAssinaturaPDF || !assinaturaDataURL) {
+                mostrarToast('Desenhe uma assinatura e clique em "Inserir no Contrato" primeiro!', 'error');
+                return;
+            }
+            
+            const preview = document.getElementById('contratoPreview');
+            if (!preview.textContent.trim()) { mostrarToast('Gere o contrato primeiro!', 'error'); return; }
+            
+            const temp = document.createElement('div');
+            temp.style.padding = '30px';
+            temp.style.fontFamily = 'Arial, sans-serif';
+            temp.style.fontSize = '12px';
+            temp.style.background = 'white';
+            
+            const pre = document.createElement('pre');
+            pre.style.whiteSpace = 'pre-wrap';
+            pre.style.fontFamily = 'Arial, sans-serif';
+            pre.style.fontSize = '12px';
+            pre.style.lineHeight = '1.6';
+            pre.textContent = preview.textContent.replace(/\[Assinatura incluída no PDF - ArrendaMoz\]/g, '');
+            temp.appendChild(pre);
+            
+            const img = document.createElement('img');
+            img.src = assinaturaDataURL;
+            img.style.maxWidth = '300px';
+            img.style.margin = '20px auto';
+            img.style.display = 'block';
+            img.style.border = '2px solid #e8edf5';
+            img.style.borderRadius = '8px';
+            img.style.padding = '8px';
+            img.style.background = 'white';
+            temp.appendChild(img);
+            
+            const legenda = document.createElement('p');
+            legenda.style.textAlign = 'center';
+            legenda.style.fontSize = '12px';
+            legenda.style.color = '#5a6a7a';
+            legenda.textContent = 'Assinatura Digital do Arrendador - ArrendaMoz';
+            temp.appendChild(legenda);
+            
+            document.body.appendChild(temp);
+            
+            html2pdf().from(temp).set({
+                margin: [15, 15],
+                filename: `contrato_assinado_${document.getElementById('tipoContrato').value}_ArrendaMoz.pdf`,
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+            }).save().then(() => {
+                document.body.removeChild(temp);
+                mostrarToast('📄 PDF com assinatura baixado!', 'success');
+            });
+        }
+        
+        // ==================== IMPRIMIR ====================
+        function imprimirContrato() {
+            const preview = document.getElementById('contratoPreview');
+            if (!preview.textContent.trim()) { mostrarToast('Gere o contrato primeiro!', 'error'); return; }
+            
+            const janela = window.open('', '_blank');
+            janela.document.write(`
+                <html>
+                <head>
+                    <title>Contrato - ArrendaMoz</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; padding: 40px; line-height: 1.6; }
+                        pre { white-space: pre-wrap; font-family: Arial, sans-serif; font-size: 12px; }
+                        @media print { body { padding: 20px; } }
+                    </style>
+                </head>
+                <body>
+                    <pre>${preview.textContent}</pre>
+                    <script>
+                        window.onload = function() { window.print(); }
+                    <\/script>
+                </body>
+                </html>
+            `);
+            janela.document.close();
+        }
+        
+        // ==================== LEMBRETE IMI ====================
+        function configurarLembreteIMI() {
+            const dataVenc = document.getElementById('dataVencimentoIMI').textContent;
+            const valor = document.getElementById('imiLembreteValor').textContent;
+            if (valor === '--') { mostrarToast('Calcule o IMI primeiro!', 'error'); return; }
+            
+            const lembrete = {
+                data: new Date().toISOString(),
+                dataVencimento: dataVenc,
+                valor: valor,
+                status: 'Ativo'
+            };
+            historicoLembretes.push(lembrete);
+            localStorage.setItem('historicoLembretesIMI', JSON.stringify(historicoLembretes));
+            atualizarHistoricoLembretes();
+            
+            // Agendar notificação
+            agendarNotificacao(dataVenc, valor);
+            
+            mostrarToast('✅ Lembrete configurado com sucesso!', 'success');
+        }
+        
+        function agendarNotificacao(dataVenc, valor) {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                const data = new Date(dataVenc);
+                const hoje = new Date();
+                const diff = Math.ceil((data - hoje) / (1000 * 60 * 60 * 24));
+                
+                if (diff <= 7 && diff > 0) {
+                    new Notification('🔔 ArrendaMoz - Lembrete IMI', {
+                        body: `IMI de ${valor} MZN vence em ${diff} dias!`,
+                        icon: '/assets/icons/icon-192.png'
+                    });
+                }
+            }
+        }
+        
+        function enviarLembreteEmail() {
+            const email = prompt('Digite seu email para receber o lembrete do IMI:');
+            if (email && email.includes('@')) {
+                mostrarToast(`📧 Lembrete enviado para ${email}`, 'success');
+            } else if (email) {
+                mostrarToast('Email inválido!', 'error');
+            }
+        }
+        
+        function atualizarHistoricoLembretes() {
+            const div = document.getElementById('listaHistorico');
+            if (historicoLembretes.length === 0) {
+                div.innerHTML = '<p style="color:var(--text-muted);"><i class="fas fa-info-circle"></i> Nenhum lembrete configurado.</p>';
+                return;
+            }
+            let html = '<div style="max-height:200px; overflow-y:auto;">';
+            historicoLembretes.slice(-5).reverse().forEach((l) => {
+                html += `
+                    <div style="padding:10px; border-bottom:1px solid var(--border-color); display:flex; justify-content:space-between; align-items:center;">
+                        <span><i class="fas fa-calendar-day" style="color:#e67e22;"></i> ${l.dataVencimento}</span>
+                        <span style="font-weight:600; color:var(--text-primary);">${l.valor} MZN</span>
+                        <span style="background:#27ae60; color:white; padding:2px 10px; border-radius:10px; font-size:11px; font-weight:600;">${l.status}</span>
+                    </div>
+                `;
+            });
+            html += '</div>';
+            div.innerHTML = html;
+        }
+        
+        // ==================== ENVIAR EMAIL ====================
+        function enviarContratoEmail() {
+            const remetente = document.getElementById('emailRemetente').value;
+            const destinatario = document.getElementById('emailDestinatario').value;
+            const assunto = document.getElementById('assuntoEmail').value;
+            const corpo = document.getElementById('corpoEmail').value;
+            const incluirAssinatura = document.getElementById('incluirAssinaturaEmail').value === 'sim';
+            
+            if (!remetente || !destinatario) {
+                mostrarToast('Preencha os emails!', 'error');
+                return;
+            }
+            if (!remetente.includes('@') || !destinatario.includes('@')) {
+                mostrarToast('Insira emails válidos!', 'error');
+                return;
+            }
+            if (!contratoTexto) {
+                mostrarToast('Gere o contrato primeiro!', 'error');
+                return;
+            }
+            
+            dadosEmail = {
+                remetente: remetente,
+                destinatario: destinatario,
+                assunto: assunto,
+                corpo: corpo,
+                incluirAssinatura: incluirAssinatura
+            };
+            
+            document.getElementById('modalMensagem').innerHTML = `
+                <div style="background:var(--bg-primary); padding:15px; border-radius:12px; margin:15px 0;">
+                    <p><i class="fas fa-user-circle" style="color:#e67e22;"></i> <strong>De:</strong> ${remetente}</p>
+                    <p><i class="fas fa-user-friends" style="color:#3498db;"></i> <strong>Para:</strong> ${destinatario}</p>
+                    <p><i class="fas fa-tag" style="color:#27ae60;"></i> <strong>Assunto:</strong> ${assunto}</p>
+                    <p><i class="fas fa-pen-fancy" style="color:#8e44ad;"></i> <strong>Assinatura:</strong> ${incluirAssinatura ? '✅ Sim' : '❌ Não'}</p>
+                </div>
+                <p style="color:var(--text-muted);">Deseja enviar este contrato por email?</p>
+            `;
+            document.getElementById('modalEmail').style.display = 'block';
+        }
+        
+        function confirmarEnvioEmail() {
+            fecharModal('modalEmail');
+            
+            const { remetente, destinatario, assunto, corpo, incluirAssinatura } = dadosEmail;
+            
+            let corpoCompleto = corpo + '\n\n' + '='.repeat(50) + '\n';
+            corpoCompleto += 'CONTRATO DE ARRENDAMENTO - ARRENDAMOZ\n';
+            corpoCompleto += '='.repeat(50) + '\n\n';
+            corpoCompleto += contratoTexto;
+            
+            if (incluirAssinatura && assinaturaDataURL) {
+                corpoCompleto += '\n\n' + '='.repeat(50) + '\n';
+                corpoCompleto += 'ASSINATURA DIGITAL DISPONÍVEL NO PDF ANEXO\n';
+            }
+            
+            const subject = encodeURIComponent(assunto);
+            const body = encodeURIComponent(corpoCompleto);
+            const mailtoLink = `mailto:${destinatario}?subject=${subject}&body=${body}&cc=${remetente}`;
+            
+            window.open(mailtoLink, '_blank');
+            
+            const statusDiv = document.getElementById('emailStatus');
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'email-status success';
+            statusDiv.innerHTML = `
+                <i class="fas fa-check-circle"></i>
+                <strong>Email preparado com sucesso!</strong><br>
+                <small>O cliente de email foi aberto. Verifique e clique em "Enviar".</small>
+            `;
+            
+            // Salvar histórico
+            const historico = {
+                data: new Date().toISOString(),
+                destinatario: destinatario,
+                assunto: assunto,
+                tipo: document.getElementById('tipoContrato').value,
+                assinatura: incluirAssinatura ? 'Sim' : 'Não'
+            };
+            enviosRealizados.unshift(historico);
+            localStorage.setItem('historicoEnvios', JSON.stringify(enviosRealizados));
+            atualizarHistorico();
+            
+            setTimeout(() => {
+                if (confirm('Deseja baixar o PDF para anexar?')) {
+                    if (incluirAssinatura && assinaturaDataURL && usarAssinaturaPDF) {
+                        baixarPDFComAssinatura();
+                    } else {
+                        baixarPDF();
+                    }
+                }
+            }, 500);
+            
+            mostrarToast('📧 Email preparado para envio!', 'success');
+        }
+        
+        function fecharModal(id) {
+            document.getElementById(id).style.display = 'none';
+        }
+        
+        window.onclick = function(event) {
+            const modal = document.getElementById('modalEmail');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // ==================== ATUALIZAR STATS ====================
+        function atualizarStats() {
+            const total = contratosSalvos.length;
+            const ativos = contratosSalvos.filter(c => c.status !== 'expirado').length;
+            const totalRendas = contratosSalvos.reduce((sum, c) => sum + (parseFloat(c.renda) || 0), 0);
+            
+            document.getElementById('totalContratos').textContent = total;
+            document.getElementById('contratosAtivos').textContent = ativos;
+            document.getElementById('totalRendas').textContent = totalRendas.toLocaleString('pt-MZ') + ' MZN';
+            document.getElementById('totalClientes').textContent = new Set(contratosSalvos.map(c => c.inquilino)).size;
+            
+            // Vencendo hoje
+            const hoje = new Date().toISOString().split('T')[0];
+            const vencendo = contratosSalvos.filter(c => c.data_fim === hoje || c.data_vencimento === hoje).length;
+            document.getElementById('vencendoHoje').textContent = vencendo;
+        }
+        
+        // ==================== ATUALIZAR HISTÓRICO ====================
+        function atualizarHistorico() {
+            const div = document.getElementById('listaContratos');
+            if (contratosSalvos.length === 0) {
+                div.innerHTML = `
+                    <p style="color:var(--text-muted); text-align:center; padding:30px;">
+                        <i class="fas fa-inbox" style="font-size:32px; display:block; margin-bottom:10px;"></i>
+                        Nenhum contrato gerado ainda.
+                    </p>
+                `;
+            } else {
+                let html = '<div style="overflow-x:auto;">';
+                html += `<table style="width:100%; border-collapse:collapse; font-size:13px;">
+                    <thead>
+                        <tr style="background:var(--gradient-secondary); color:white;">
+                            <th style="padding:10px 12px; text-align:left;">Tipo</th>
+                            <th style="padding:10px 12px; text-align:left;">Inquilino</th>
+                            <th style="padding:10px 12px; text-align:left;">Renda</th>
+                            <th style="padding:10px 12px; text-align:left;">Data</th>
+                            <th style="padding:10px 12px; text-align:left;">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                
+                contratosSalvos.slice(0, 20).forEach(c => {
+                    const status = c.status === 'expirado' ? 
+                        '<span style="color:#e74c3c;">🔴 Expirado</span>' : 
+                        '<span style="color:#27ae60;">🟢 Ativo</span>';
+                    html += `
+                        <tr style="border-bottom:1px solid var(--border-color);">
+                            <td style="padding:10px 12px;">${c.tipo || 'N/A'}</td>
+                            <td style="padding:10px 12px;">${c.inquilino || 'N/A'}</td>
+                            <td style="padding:10px 12px;">${c.renda ? parseFloat(c.renda).toLocaleString('pt-MZ') + ' MZN' : 'N/A'}</td>
+                            <td style="padding:10px 12px;">${c.created_at ? new Date(c.created_at).toLocaleDateString('pt-MZ') : 'N/A'}</td>
+                            <td style="padding:10px 12px;">${status}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table></div>';
+                div.innerHTML = html;
+            }
+            
+            // Histórico de envios
+            const divEnvios = document.getElementById('listaEnvios');
+            if (enviosRealizados.length === 0) {
+                divEnvios.innerHTML = `
+                    <p style="color:var(--text-muted); text-align:center; padding:30px;">
+                        <i class="fas fa-envelope-open" style="font-size:32px; display:block; margin-bottom:10px;"></i>
+                        Nenhum envio realizado.
+                    </p>
+                `;
+            } else {
+                let html = '<div style="overflow-x:auto;">';
+                html += `<table style="width:100%; border-collapse:collapse; font-size:13px;">
+                    <thead>
+                        <tr style="background:var(--gradient-secondary); color:white;">
+                            <th style="padding:10px 12px; text-align:left;">Data</th>
+                            <th style="padding:10px 12px; text-align:left;">Destinatário</th>
+                            <th style="padding:10px 12px; text-align:left;">Assunto</th>
+                            <th style="padding:10px 12px; text-align:left;">Assinatura</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+                
+                enviosRealizados.slice(0, 20).forEach(e => {
+                    html += `
+                        <tr style="border-bottom:1px solid var(--border-color);">
+                            <td style="padding:10px 12px;">${e.data ? new Date(e.data).toLocaleDateString('pt-MZ') : 'N/A'}</td>
+                            <td style="padding:10px 12px;">${e.destinatario || 'N/A'}</td>
+                            <td style="padding:10px 12px;">${e.assunto || 'N/A'}</td>
+                            <td style="padding:10px 12px;">${e.assinatura === 'Sim' ? '✅' : '❌'}</td>
+                        </tr>
+                    `;
+                });
+                
+                html += '</tbody></table></div>';
+                divEnvios.innerHTML = html;
+            }
+        }
+        
+        // ==================== TOAST ====================
+        function mostrarToast(mensagem, tipo = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${tipo}`;
+            
+            const icones = {
+                success: 'fa-check-circle',
+                error: 'fa-times-circle',
+                info: 'fa-info-circle'
+            };
+            
+            toast.innerHTML = `
+                <i class="fas ${icones[tipo] || icones.info}"></i>
+                <span>${mensagem}</span>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(100px)';
+                toast.style.transition = 'all 0.3s ease';
+                setTimeout(() => toast.remove(), 500);
+            }, 4000);
+        }
+        
+        // ==================== DARK MODE ====================
+        function toggleDarkMode() {
+            const theme = document.documentElement.getAttribute('data-theme');
+            const newTheme = theme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            const icon = document.getElementById('themeIcon');
+            icon.className = newTheme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        
+        function carregarTema() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            const icon = document.getElementById('themeIcon');
+            icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+        
+        // ==================== NOTIFICAÇÕES ====================
+        function mostrarNotificacoes() {
+            if ('Notification' in window && Notification.permission === 'granted') {
+                mostrarToast('🔔 Você tem 3 notificações pendentes', 'info');
+            } else if ('Notification' in window) {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        new Notification('🔔 ArrendaMoz', {
+                            body: 'Notificações ativadas! Você receberá lembretes importantes.',
+                            icon: '/assets/icons/icon-192.png'
+                        });
+                    }
+                });
+            } else {
+                mostrarToast('🔔 Notificações não suportadas neste navegador.', 'info');
+            }
+        }
+        
+        // ==================== INICIALIZAÇÃO ====================
+        window.onload = function() {
+            // Verificar autenticação
+            if (!verificarAutenticacao()) return;
+            
+            // Carregar tema
+            carregarTema();
+            
+            // Carregar dados do usuário
+            carregarDadosUsuario();
+            
+            // Inicializar funcionalidades
+            calcularIMI();
+            gerarAmortizacao();
+            atualizarCamposPorTipo();
+            atualizarHistoricoLembretes();
+            atualizarStats();
+            atualizarHistorico();
+            
+            // Restaurar assinatura
+            const assinaturaSalva = localStorage.getItem('assinaturaSalva');
+            if (assinaturaSalva) {
+                assinaturaDataURL = assinaturaSalva;
+                const img = new Image();
+                img.onload = function() {
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    document.getElementById('assinaturasSalvas').innerHTML = `
+                        <div style="display:inline-block; margin-top:10px; padding:10px; border:1px solid var(--border-color); border-radius:12px; background:var(--bg-card);">
+                            <img src="${assinaturaDataURL}" width="150" style="border-radius:6px;" />
+                            <p style="font-size:12px; color:var(--text-muted); margin-top:5px;"><i class="fas fa-check-circle" style="color:#27ae60;"></i> Assinatura restaurada</p>
+                        </div>
+                    `;
+                };
+                img.src = assinaturaSalva;
+            }
+            
+            // Solicitar permissão para notificações
+            if ('Notification' in window && Notification.permission === 'default') {
+                Notification.requestPermission();
+            }
+            
+            console.log('🚀 ArrendaMoz v3.0 inicializado com sucesso!');
+            console.log(`📊 ${contratosSalvos.length} contratos no histórico`);
+            console.log(`👤 Usuário: ${localStorage.getItem('userNome') || 'Convidado'}`);
+        };
+    </script>
+</body>
+</html>
