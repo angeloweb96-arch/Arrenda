@@ -285,17 +285,6 @@
             box-shadow: 0 8px 30px rgba(39, 174, 96, 0.45);
         }
         
-        .btn-danger {
-            background: linear-gradient(135deg, #e74c3c, #c0392b);
-            color: white;
-            box-shadow: 0 4px 15px rgba(231, 76, 60, 0.35);
-        }
-        
-        .btn-danger:hover:not(:disabled) {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(231, 76, 60, 0.45);
-        }
-        
         /* ==================== DIVIDER ==================== */
         .divider {
             text-align: center;
@@ -639,13 +628,6 @@
     </div>
     
     <script>
-        // ==================== CONFIGURAÇÃO ====================
-        // Configuração do Supabase (opcional - pode usar apenas localStorage)
-        const SUPABASE_URL = 'https://wpwprgyrbbhwvmbijnvg.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_MXIrgPpCDK9uSFe4W1zftg_g_nL-TUJ';
-        const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        */
-        
         // ==================== VARIÁVEIS ====================
         let modoAtual = 'login';
         let codigoEnviado = false;
@@ -935,28 +917,6 @@
             if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                 mostrarMensagem(`📧 [DEV] Código: ${codigo}`, 'info');
             }
-            
-          
-            try {
-                const { error } = await supabase.functions.invoke('send-email', {
-                    body: {
-                        to: email,
-                        subject: '🔐 ArrendaMoz - Código de Verificação',
-                        template: 'verificacao',
-                        data: { 
-                            nome: nome, 
-                            codigo: codigo, 
-                            link: window.location.origin + '/cadastro.html' 
-                        }
-                    }
-                });
-                if (error) throw error;
-                console.log('Email enviado com sucesso via Supabase!');
-            } catch (error) {
-                console.error('Erro ao enviar email:', error);
-                mostrarMensagem('⚠️ Não foi possível enviar o email. Tente novamente.', 'erro');
-            }
-            */
         }
         
         // ==================== TIMER ====================
